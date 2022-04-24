@@ -9,6 +9,9 @@ const root = {
     getQuestion: function () {
         return question;
     },
+    getQuestionsWithAnswers: function () {
+        return question;
+    }
 };
 
 const app = express();
