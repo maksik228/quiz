@@ -2,7 +2,9 @@ import express from 'express';
 import {graphqlHTTP} from "express-graphql";
 import {schema} from "./schema.js";
 import {question} from "./queries/question.js";
-import {getUserById} from "./queries/user.js";
+import {createUser, getUserById} from "./queries/user.js";
+import cors from 'cors';
+
 const port = 3002;
 
 
@@ -15,13 +17,16 @@ const root = {
     },
     getUser: (args) => {
         const id = args.Id;
-        const user = getUserById(id)
-        return user;
+        return getUserById(id);
+    },
+    createUser: ({user}) => {
+        return createUser(user);
     },
 };
 
 const app = express();
-app.use('/', graphqlHTTP({
+app.use(cors());
+app.use('/graphql', graphqlHTTP({
     schema: schema,
     rootValue: root,
     graphiql: true

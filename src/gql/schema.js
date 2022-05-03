@@ -27,4 +27,17 @@ export const schema = buildSchema(`
         getQuestionsWithAnswers: [Question]
         getUser(Id: Int): User
       }
+      
+      # Входной тип создания юзера
+      input UserInput{
+        login: String,
+        password: String,
+        email: String,
+      }
+    
+
+    # Тут определяем все мутации
+      type Mutation{
+        createUser(user: UserInput!):String
+      }
 `);
