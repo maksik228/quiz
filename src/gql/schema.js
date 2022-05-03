@@ -1,5 +1,6 @@
 import {buildSchema} from "graphql";
 export const schema = buildSchema(`
+       scalar Date
 
        type Answer {
         ID: Int
@@ -13,8 +14,17 @@ export const schema = buildSchema(`
         answers: [Answer]
        }
        
+      type User {
+        ID: Int
+        login: String,
+        password: String,
+        email: String,
+        dt: Date,
+       }
+       
       type Query {
         getQuestion: [Question]
         getQuestionsWithAnswers: [Question]
+        getUser(Id: Int): User
       }
 `);

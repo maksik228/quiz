@@ -2,3 +2,4 @@
 
 # User-specific WebStorm files
 .idea/
+/.env

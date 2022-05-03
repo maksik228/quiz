@@ -2,6 +2,7 @@ import express from 'express';
 import {graphqlHTTP} from "express-graphql";
 import {schema} from "./schema.js";
 import {question} from "./queries/question.js";
+import {getUserById} from "./queries/user.js";
 const port = 3002;
 
 
@@ -11,7 +12,12 @@ const root = {
     },
     getQuestionsWithAnswers: function () {
         return question;
-    }
+    },
+    getUser: (args) => {
+        const id = args.Id;
+        const user = getUserById(id)
+        return user;
+    },
 };
 
 const app = express();
