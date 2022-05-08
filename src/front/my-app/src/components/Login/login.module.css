@@ -1,0 +1,14 @@
+.wrapperForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.wrapperBack{
+    background: #E8A87C;
+    margin-top: 20px;
+    text-decoration: none;
+    padding: 5px;
+    color: aliceblue;
+}

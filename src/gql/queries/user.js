@@ -20,3 +20,13 @@ export const createUser = async function(user) {
     // await con.end();
     return res;
 }
+
+export const isUserExist = async function(user) {
+    const con = connection;
+    const [res] = await con.execute('SELECT * FROM users WHERE login=?', [user.login]);
+    if (res.length) {
+        const row = res[0];
+        return passwordHash.verify(user.password,row.password);
+    }
+    return false;
+}

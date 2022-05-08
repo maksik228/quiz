@@ -26,6 +26,7 @@ export const schema = buildSchema(`
         getQuestion: [Question]
         getQuestionsWithAnswers: [Question]
         getUser(Id: Int): User
+        isUserExist(user: UserLogin): Boolean
       }
       
       # Входной тип создания юзера
@@ -33,6 +34,12 @@ export const schema = buildSchema(`
         login: String,
         password: String,
         email: String,
+      }
+      
+      # Входной тип логина юзера
+      input UserLogin{
+        login: String,
+        password: String,
       }
     
 

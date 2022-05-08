@@ -2,7 +2,7 @@ import express from 'express';
 import {graphqlHTTP} from "express-graphql";
 import {schema} from "./schema.js";
 import {question} from "./queries/question.js";
-import {createUser, getUserById} from "./queries/user.js";
+import {createUser, getUserById, isUserExist} from "./queries/user.js";
 import cors from 'cors';
 
 const port = 3002;
@@ -21,6 +21,9 @@ const root = {
     },
     createUser: ({user}) => {
         return createUser(user);
+    },
+    isUserExist: ({user}) => {
+        return isUserExist(user);
     },
 };
 
