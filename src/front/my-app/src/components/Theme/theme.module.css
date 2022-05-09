@@ -1,3 +1,24 @@
+.themeContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+    background-color: white;
+    padding: 2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 .wrapper {
 
+    margin-top: 40px;
+}
+
+.title {
+    margin-left: 20px;
+    font-size: 20px;
 }

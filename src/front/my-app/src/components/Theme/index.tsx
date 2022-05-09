@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import style from './theme.module.css';
+import {Choice} from "./components/Choice";
+import type {choiceType} from "./components/Choice";
 
 export const Theme = () => {
-    const [themes, setThemes] = useState([]);
+    const [themes, setThemes] = useState<choiceType[]>([]);
     const [isLoad, setIsLoad] = useState(false);
     const loadThemes = async () => {
         const q = `
@@ -33,14 +35,11 @@ export const Theme = () => {
         });
     }
 
-
     return (
         <div className={style.wrapper}>
-            <div>
-                {themes.length}
-            </div>
-            <div>
-                игра 2
+            <div className={style.title}>Выберете тему</div>
+            <div className={style.themeContainer}>
+                {themes.map((object) => <Choice  id={object.id} name={object.name} key={object.id}/>)}
             </div>
         </div>
     );

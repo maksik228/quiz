@@ -1,7 +1,7 @@
 import express from 'express';
 import {graphqlHTTP} from "express-graphql";
 import {schema} from "./schema.js";
-import {question} from "./queries/question.js";
+import {getQuestionWithAnswersByThemeAndUser} from "./queries/question.js";
 import {createUser, getUserById, isUserExist} from "./queries/user.js";
 import cors from 'cors';
 import {getAllThemes} from "./queries/theme.js";
@@ -10,11 +10,8 @@ const port = 3002;
 
 
 const root = {
-    getQuestion: function () {
-        return question;
-    },
-    getQuestionsWithAnswers: function () {
-        return question;
+    getActiveQuestionByThemeUser: function (args) {
+        return getQuestionWithAnswersByThemeAndUser(args.theme_id, args.user_id);
     },
     getUser: (args) => {
         const id = args.Id;

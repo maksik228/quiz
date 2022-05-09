@@ -3,9 +3,9 @@ export const schema = buildSchema(`
        scalar Date
 
        type Answer {
-        ID: Int
+        id: Int
         text: String
-        isRight: Boolean
+        is_true: Boolean
        }
        
        type Theme {
@@ -14,8 +14,9 @@ export const schema = buildSchema(`
        }
        
       type Question {
-        ID: Int
-        question: String
+        id: Int
+        text: String
+        theme_id: Int
         answers: [Answer]
        }
        
@@ -28,8 +29,7 @@ export const schema = buildSchema(`
        }
        
       type Query {
-        getQuestion: [Question]
-        getQuestionsWithAnswers: [Question]
+        getActiveQuestionByThemeUser(theme_id: Int, user_id: Int): [Question]
         getUser(Id: Int): User
         getAllThemes: [Theme]
         isUserExist(user: UserLogin): Boolean

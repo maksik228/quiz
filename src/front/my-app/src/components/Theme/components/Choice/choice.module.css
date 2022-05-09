@@ -1,0 +1,11 @@
+.choice {
+    background: #5CDB95;
+    padding: 13px;
+    margin: 2px;
+}
+
+.choice a{
+    padding: 13px;
+    text-decoration: none;
+    outline: none;
+}
