@@ -15,7 +15,8 @@
     "react-scripts": "5.0.1",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "validator": "^13.7.0"
   },
   "scripts": {
     "start-front": "react-scripts start",

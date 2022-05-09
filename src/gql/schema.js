@@ -8,6 +8,11 @@ export const schema = buildSchema(`
         isRight: Boolean
        }
        
+       type Theme {
+        id: Int
+        name: String
+       }
+       
       type Question {
         ID: Int
         question: String
@@ -26,6 +31,7 @@ export const schema = buildSchema(`
         getQuestion: [Question]
         getQuestionsWithAnswers: [Question]
         getUser(Id: Int): User
+        getAllThemes: [Theme]
         isUserExist(user: UserLogin): Boolean
       }
       
@@ -45,6 +51,6 @@ export const schema = buildSchema(`
 
     # Тут определяем все мутации
       type Mutation{
-        createUser(user: UserInput!):String
+        createUser(user: UserInput!):Int
       }
 `);

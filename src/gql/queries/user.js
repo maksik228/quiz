@@ -16,9 +16,12 @@ export const getUserById = async function(Id) {
 export const createUser = async function(user) {
     const con = connection;
     const hash =  passwordHash.generate(user.password);
-    const res = await con.execute('INSERT INTO users (login,password,email) value (?,?,?)', [user.login, hash, user.email]);
-    // await con.end();
-    return res;
+    const [res] = await con.execute('INSERT INTO users (login,password,email) value (?,?,?)', [user.login, hash, user.email]);
+    if (res?.insertId) {
+        return res.insertId;
+    } else {
+        return 0
+    }
 }
 
 export const isUserExist = async function(user) {

@@ -4,6 +4,7 @@ import {schema} from "./schema.js";
 import {question} from "./queries/question.js";
 import {createUser, getUserById, isUserExist} from "./queries/user.js";
 import cors from 'cors';
+import {getAllThemes} from "./queries/theme.js";
 
 const port = 3002;
 
@@ -24,6 +25,9 @@ const root = {
     },
     isUserExist: ({user}) => {
         return isUserExist(user);
+    },
+    getAllThemes: () => {
+        return getAllThemes();
     },
 };
 

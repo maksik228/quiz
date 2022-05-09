@@ -6,7 +6,8 @@ export const Login = () => {
     return (
         <div className={style.wrapperForm}>
             <LoginForm/>
-            <div className={style.wrapperBack}><Link to=""> На главную </Link></div>
+            <div className={style.wrapperBack}><Link to="/signup"> Зарегистрироваться </Link></div>
+            <div className={style.wrapperBack}><Link to="/"> На главную </Link></div>
         </div>
     );
 }
