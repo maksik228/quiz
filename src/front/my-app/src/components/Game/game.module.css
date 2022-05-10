@@ -1,0 +1,109 @@
+.main {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F5FFFA;
+    border-radius:10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 50px 0;
+}
+.content {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Noto Sans, sans-serif;
+}
+
+.questionBlock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #B0E0E6;
+    width:600px;
+    min-height:100px;
+    padding:20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border-radius:10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.question {
+    font-size: 20px;
+    line-height: 1.3;
+    text-align:center;
+    margin-bottom: 10px;
+    color: #451515;
+}
+.timeBlock {
+    width: 50px;
+    height: 50px;
+    background-color: #FFFAFA;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #630d0d;
+}
+.time {
+    font-size: 24px;
+    color: #451515;
+}
+
+.answers {
+    display: flex;
+    width: 600px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.answersRow {
+    display:flex;
+    flex-direction: row;
+    width: 600px;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+.answersRow + .answersRow {
+    margin-top:20px;
+}
+.answer + .answer {
+    margin-left:20px;
+}
+
+.answerBlock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    padding:20px;
+    background-color: #B0E0E6;
+    width:250px;
+    border-radius:10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.answer {
+    font-size: 20px;
+    line-height: 1.3;
+    color: #451515;
+}
+
+.answerBlock.right {
+    background-color: #5CDB95;
+}
+.answerBlock.wrong {
+    background-color: #f07f7f;
+}
+.buttons {
+    margin-top: 40px;
+    background-color: #5CDB95;
+    width: 120px;
+    border-radius:20px;
+    font-size: 18px;
+    text-align:center;
+    padding: 10px 10px;
+    color: #F0FFFF;
+}
