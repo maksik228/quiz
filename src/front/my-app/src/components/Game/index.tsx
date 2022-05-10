@@ -1,36 +1,48 @@
 import style from './game.module.css';
 import {useLocation} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {GameAnswer} from "./components/GameAnswer";
+import {useNavigate} from "react-router-dom";
 
 type question = {
-                    answers: {
-                        id:number;
-                        text: string;
-                        is_true:boolean
-                    }[];
-                    id: number;
-                    text:string;
-                    theme_id: number;
-                };
+    answers: {
+        id: number;
+        text: string;
+        is_true: boolean
+    }[];
+    id: number;
+    text: string;
+    theme_id: number;
+};
 
-const ALL_TIME:number = 20;
+type resultType = {
+        user_id: number,
+        question_id: number,
+        answer_id: number,
+    };
+
+const ALL_TIME: number = 15;
+const USER_ID = 1;
 
 export const Game = () => {
     const location = useLocation();
     const [questions, setQuestions] = useState<question[]>([]);
     const [currenNumber, setCurrentNumber] = useState(0);
+    const [isChose, setIsChose] = useState(false);
     const [counter, setCounter] = useState(ALL_TIME);
+    const [countRight, setCountRight] = useState(0);
+    const [resultStats, setResultStats] = useState<resultType[]>([]);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
-        counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+        if (counter == 0) {
+            TimesHasGone()
+        }
+        !isChose && counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
     }, [counter]);
 
 
     const themeId = location.pathname.split('/')[2];
-    // const wrongAnswerStyle = style.wrong;
-    // const rightAnswerStyle = style.right;
-    // const answerStyle = style.answerBlock;
 
     const loadQuestions = async () => {
         const q = `
@@ -56,7 +68,7 @@ export const Game = () => {
                     query: q,
                     variables: {
                         "theme_id": parseInt(themeId),
-                        "user_id": 1
+                        "user_id": USER_ID
                     }
                 })
             });
@@ -70,6 +82,64 @@ export const Game = () => {
         return (<div>Загружаем</div>); //прелоадер
     }
 
+    const findRightAnswer = (): number => {
+        for (let answer of questions[currenNumber].answers) {
+            if (answer.is_true) {
+                return answer.id;
+            }
+        }
+        return 0;
+    }
+
+    const answerClick = (event: React.SyntheticEvent) => {
+        if (isChose) return;
+        const chosenId = parseInt(event.currentTarget.id);
+        const rightAnswer = findRightAnswer();
+        if (rightAnswer == chosenId) {
+            const el = document.getElementById(String(rightAnswer));
+            if (el) el.classList.add(style.answerBlockRight);
+            setCountRight(countRight + 1);
+        } else {
+            const elRight = document.getElementById(String(rightAnswer));
+            const elWrong = document.getElementById(String(chosenId));
+            if (elRight && elWrong) {
+                elRight.classList.add(style.answerBlockRight);
+                elWrong.classList.add(style.answerBlockWrong);
+            }
+        }
+        setResultStats([...resultStats,{
+            user_id: USER_ID,
+            question_id: questions[currenNumber].id,
+            answer_id: chosenId,
+        }])
+
+        setIsChose(true);
+    }
+
+    const TimesHasGone = () => {
+        setResultStats([...resultStats,{
+            user_id: USER_ID,
+            question_id: questions[currenNumber].id,
+            answer_id: 0,
+        }])
+        const rightAnswer = findRightAnswer();
+        const el = document.getElementById(String(rightAnswer));
+        if (el) el.classList.add(style.answerBlockRight);
+        setIsChose(true);
+    }
+
+    const nextQuestion = () => {
+        console.log(resultStats);
+
+        if (isChose || (counter == 0)) {
+            if (questions.length == (currenNumber + 1)) {
+                navigate("/game/result/");
+            }
+            setCurrentNumber(currenNumber + 1);
+            setIsChose(false);
+            setCounter(ALL_TIME);
+        }
+    }
 
     return (
         <div className={style.main}>
@@ -84,12 +154,18 @@ export const Game = () => {
 
                 <div className={style.answers}>
 
-                    {questions[currenNumber].answers.map((object) => <GameAnswer className={style.answerBlock}
-                                                                                 textAnswer={object.text}
-                                                                                 key={'answer_'+object.id}/>)}
+                    {questions[currenNumber].answers.map((object) => {
+                        return (<div className={style.answerBlock} key={'answer_' + object.id}
+                                     id={object.id.toString()}
+                                     onClick={(e) => answerClick(e,)}>
+                            <p className={style.answer}>{object.text}</p>
+                        </div>);
+                    })}
                 </div>
 
-                <div className={style.buttons}>
+                <div className={style.buttons} onClick={() => {
+                    nextQuestion()
+                }}>
                     <span>Продолжить</span>
                 </div>
             </div>

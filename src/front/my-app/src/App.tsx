@@ -1,7 +1,14 @@
 import {Link} from "react-router-dom";
 import './App.css';
+import {useDispatch, useSelector} from "react-redux";
+import {toggleTask} from "./store/actions";
 
 function App() {
+
+    const dispatch = useDispatch();
+    dispatch(toggleTask(11));
+    const tasks = useSelector(state => state);
+    console.log(tasks);
 
   return (
     <div className="App">

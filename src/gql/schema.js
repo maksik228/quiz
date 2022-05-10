@@ -42,6 +42,12 @@ export const schema = buildSchema(`
         email: String,
       }
       
+      input StatsInput {
+        user_id: Int,
+        question_id: Int,
+        answer_id: Int,
+      }
+      
       # Входной тип логина юзера
       input UserLogin{
         login: String,
@@ -52,5 +58,6 @@ export const schema = buildSchema(`
     # Тут определяем все мутации
       type Mutation{
         createUser(user: UserInput!):Int
+        addStats(stats: [StatsInput]!): Boolean
       }
 `);

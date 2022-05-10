@@ -84,6 +84,7 @@
     vertical-align: middle;
     text-align: center;
     margin-bottom: 20px;
+    cursor: pointer;
 }
 .answer {
     font-size: 20px;
@@ -91,10 +92,10 @@
     color: #451515;
 }
 
-.answerBlock.right {
+.answerBlockRight {
     background-color: #5CDB95;
 }
-.answerBlock.wrong {
+.answerBlockWrong {
     background-color: #f07f7f;
 }
 .buttons {
@@ -106,4 +107,5 @@
     text-align:center;
     padding: 10px 10px;
     color: #F0FFFF;
+    cursor: pointer;
 }

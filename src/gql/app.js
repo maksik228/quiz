@@ -5,6 +5,7 @@ import {getQuestionWithAnswersByThemeAndUser} from "./queries/question.js";
 import {createUser, getUserById, isUserExist} from "./queries/user.js";
 import cors from 'cors';
 import {getAllThemes} from "./queries/theme.js";
+import {addStats} from "./queries/game.js";
 
 const port = 3002;
 
@@ -26,6 +27,9 @@ const root = {
     getAllThemes: () => {
         return getAllThemes();
     },
+    addStats: (stats) => {
+        return addStats(stats);
+    }
 };
 
 const app = express();
