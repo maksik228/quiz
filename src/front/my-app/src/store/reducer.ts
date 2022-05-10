@@ -1,22 +1,24 @@
-import * as actions from './actionTypes';
-let lastId = 0;
-export default function reducer(state:any[] = [], action: actions.ActionType) {
-    switch (action.type) {
-        case actions.TASK_ADD:
-            return [...state, {
-                id: ++lastId,
-                title: action.payload.title,
-                completed: false,
-            }];
-        case actions.TASK_TOGGLE:
-            return state.map(task => {
-                if (task.id === action.payload.id)
-                    return { ...task, completed: !task.completed }
-                return task;
-            });
-        case actions.TASK_REMOVE:
-            return state.filter(task => action.payload.id !== task.id);
-        default:
-            return state;
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = [
+    { id: "1", title: "First Post!", content: "Hello!" },
+    { id: "2", title: "Second Post", content: "More text" }
+];
+
+const postsSlice = createSlice({
+    name: "posts",
+    initialState,
+    reducers: {
+        postAdded(state, action) {
+            state.push(action.payload);
+        },
+        postDeleted(state, action) {
+            const idx = state.findIndex((el) => el.id === action.payload.id);
+            state.splice(idx, 1);
+        }
     }
-}
+});
+
+export const { postAdded, postDeleted } = postsSlice.actions;
+
+export default postsSlice.reducer;

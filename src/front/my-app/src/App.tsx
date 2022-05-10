@@ -1,14 +1,21 @@
 import {Link} from "react-router-dom";
 import './App.css';
 import {useDispatch, useSelector} from "react-redux";
-import {toggleTask} from "./store/actions";
+import {postAdded} from "./store/reducer";
 
 function App() {
 
     const dispatch = useDispatch();
-    dispatch(toggleTask(11));
-    const tasks = useSelector(state => state);
-    console.log(tasks);
+    dispatch(
+        postAdded({
+            id: 1,
+            title: 'dddddd',
+            content: 'dddddddddddd',
+        })
+    )
+    // @ts-ignore
+    const posts = useSelector((state) => state.posts);
+    console.log(posts);
 
   return (
     <div className="App">
