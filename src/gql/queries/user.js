@@ -1,7 +1,8 @@
 import connection from "../db/mysql.js";
 import passwordHash from "password-hash";
+import jwt from "jsonwebtoken";
 
-
+const secret = 'secret';
 
 export const getUserById = async function(Id) {
     const con = connection;
@@ -24,12 +25,34 @@ export const createUser = async function(user) {
     }
 }
 
+export const checkToken = async function(token) {
+    try {
+        const decode = jwt.verify(token,'secret');
+        if (decode.id) {
+            return {status: false, id: decode.id, token: token};
+        } else {
+            return {status: true, id: 0, token: ''};
+        }
+    } catch (e) {
+        return {status: true, id: 0, token: ''};
+    }
+}
+
 export const isUserExist = async function(user) {
     const con = connection;
     const [res] = await con.execute('SELECT * FROM users WHERE login=?', [user.login]);
     if (res.length) {
         const row = res[0];
-        return passwordHash.verify(user.password,row.password);
+        if (passwordHash.verify(user.password,row.password)){
+            const token = createToken(row.id);
+            return {status: true, id: row.id, token: token};
+        } else {
+            return {status: false, id: 0, token: ''};
+        }
     }
-    return false;
+    return {status: false, id: 0, token: ''};
+}
+
+const  createToken = function (user_id) {
+    return jwt.sign({id: user_id}, secret, {expiresIn: "24h"});
 }

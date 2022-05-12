@@ -1,0 +1,52 @@
+.main {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #F5FFFA;
+  border-radius:10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 50px 0;
+  font-family: Noto Sans, sans-serif;
+}
+.button {
+  /*
+   height: 30px;
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   border-radius:10px;*/
+
+  margin-bottom:30px;
+  background-color: #5CDB95;
+  border-radius:20px;
+  font-size: 18px;
+  text-align:center;
+  padding: 10px 20px;
+  color: #F0FFFF;
+  cursor:pointer;
+}
+
+.button.play {
+  background-color: #5CDB95;
+  border: 1px solid #CCFFCC;
+}
+.button.play:hover {
+  color: #009900;
+}
+.button.logIn {
+  background-color: #FFCC99;
+  border: 1px solid #FFFFCC;
+}
+.button.logIn:hover {
+  color: #CC6633;
+}
+.button.signUp {
+  background-color: #CCCCFF;
+  border: 1px solid #FFCCFF;
+}
+.button.signUp:hover {
+  color: #6666CC;
+}
+
+.noDecoration {
+  text-decoration: none;
+}

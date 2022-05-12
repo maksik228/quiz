@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
 import style from './loginForm.module.css';
+import {useDispatch} from "react-redux";
+import {setUser} from "../../../../store/reducer";
 
 export const LoginForm = () => {
     const [errorMessage, setErrorMessage] = useState('');
+    const dispatch = useDispatch();
     const handleSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         const { login, pass } = document.forms[0];
@@ -12,8 +15,12 @@ export const LoginForm = () => {
             setErrorMessage('');
             const q = `
                     query isUser($user: UserLogin) {
-                                isUserExist(user:$user)
-                            }`;
+                        isUserExist(user:$user){
+                             status
+                             id
+                             token
+                          }
+                        }`;
             const result = await fetch('http://localhost:3002/graphql',
                 {
                     method: 'POST',
@@ -31,8 +38,10 @@ export const LoginForm = () => {
                     })
                 });
             const res_json = await result.json();
-            if (res_json.data.isUserExist){
-                alert('вы зашли');
+            if (res_json.data.isUserExist.status){
+                dispatch(setUser({id:res_json.data.isUserExist.id, token:res_json.data.isUserExist.token}))
+                localStorage.setItem('token', res_json.data.isUserExist.token);
+                alert('Вы зашли');
             } else {
                 setErrorMessage('Неправильный логин или пароль');
             }

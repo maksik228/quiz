@@ -32,7 +32,15 @@ export const schema = buildSchema(`
         getActiveQuestionByThemeUser(theme_id: Int, user_id: Int): [Question]
         getUser(Id: Int): User
         getAllThemes: [Theme]
-        isUserExist(user: UserLogin): Boolean
+        isUserExist(user: UserLogin): UserOutput
+        checkToken(token: String): UserOutput
+      }
+      
+      
+      type UserOutput {
+        status: Boolean
+        id: Int
+        token: String
       }
       
       # Входной тип создания юзера

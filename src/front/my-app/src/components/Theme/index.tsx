@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import style from './theme.module.css';
 import {Choice} from "./components/Choice";
 import type {choiceType} from "./components/Choice";
+import {useSelector} from "react-redux";
 
 export const Theme = () => {
     const [themes, setThemes] = useState<choiceType[]>([]);
@@ -33,6 +34,11 @@ export const Theme = () => {
         loadThemes().then(function(res){
             setThemes(res);
         });
+    }
+    // @ts-ignore
+    const user_id = useSelector((state) => state.user.id);
+    if (!user_id) {
+        return (<div>Вы не авторизованы</div>)
     }
 
     return (

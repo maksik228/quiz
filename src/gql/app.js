@@ -2,7 +2,7 @@ import express from 'express';
 import {graphqlHTTP} from "express-graphql";
 import {schema} from "./schema.js";
 import {getQuestionWithAnswersByThemeAndUser} from "./queries/question.js";
-import {createUser, getUserById, isUserExist} from "./queries/user.js";
+import {checkToken, createUser, getUserById, isUserExist} from "./queries/user.js";
 import cors from 'cors';
 import {getAllThemes} from "./queries/theme.js";
 import {addStats} from "./queries/game.js";
@@ -29,6 +29,9 @@ const root = {
     },
     addStats: (stats) => {
         return addStats(stats);
+    },
+    checkToken: ({token}) =>{
+        return checkToken(token);
     }
 };
 
