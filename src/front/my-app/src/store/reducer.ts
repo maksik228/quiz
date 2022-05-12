@@ -1,24 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {combineReducers, createSlice} from "@reduxjs/toolkit";
 
-const initialState = [
-    { id: "1", title: "First Post!", content: "Hello!" },
-    { id: "2", title: "Second Post", content: "More text" }
-];
 
-const postsSlice = createSlice({
-    name: "posts",
-    initialState,
+const counterSlice = createSlice({
+    name: "counter",
+    initialState: {right: 0, all: 0},
     reducers: {
-        postAdded(state, action) {
-            state.push(action.payload);
-        },
-        postDeleted(state, action) {
-            const idx = state.findIndex((el) => el.id === action.payload.id);
-            state.splice(idx, 1);
-        }
+        increment: (state) => {state.right = state.right + 1},
+        resetRight: (state) => {state.right = 0},
+        setAll: (state, action) => {state.all = action.payload}
     }
 });
 
-export const { postAdded, postDeleted } = postsSlice.actions;
+const userSlice = createSlice({
+    name: "user",
+    initialState: {id:0, token:''},
+    reducers: {
+        setId: (state,action) => {state.id = action.payload},
+        setToken: (state, action) => {state.token = action.payload},
+    }
+});
 
-export default postsSlice.reducer;
+export const { increment, resetRight, setAll} = counterSlice.actions;
+export const { setId, setToken} = userSlice.actions;
+
+export default combineReducers({
+    counter: counterSlice.reducer,
+    user: userSlice.reducer,
+})
+
+// export default counterSlice.reducer;

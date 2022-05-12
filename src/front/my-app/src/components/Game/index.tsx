@@ -2,6 +2,8 @@ import style from './game.module.css';
 import {useLocation} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {increment, resetRight, setAll} from "../../store/reducer";
 
 type question = {
     answers: {
@@ -15,10 +17,10 @@ type question = {
 };
 
 type resultType = {
-        user_id: number,
-        question_id: number,
-        answer_id: number,
-    };
+    user_id: number,
+    question_id: number,
+    answer_id: number,
+};
 
 const ALL_TIME: number = 15;
 const USER_ID = 1;
@@ -32,6 +34,7 @@ export const Game = () => {
     const [countRight, setCountRight] = useState(0);
     const [resultStats, setResultStats] = useState<resultType[]>([]);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -79,6 +82,7 @@ export const Game = () => {
 
     if (questions.length === 0) {
         loadQuestions().then(res => setQuestions(res.data.getActiveQuestionByThemeUser))
+        dispatch(resetRight()); //счётчик в ноль
         return (<div>Загружаем</div>); //прелоадер
     }
 
@@ -98,6 +102,7 @@ export const Game = () => {
         if (rightAnswer == chosenId) {
             const el = document.getElementById(String(rightAnswer));
             if (el) el.classList.add(style.answerBlockRight);
+            dispatch(increment());
             setCountRight(countRight + 1);
         } else {
             const elRight = document.getElementById(String(rightAnswer));
@@ -107,7 +112,7 @@ export const Game = () => {
                 elWrong.classList.add(style.answerBlockWrong);
             }
         }
-        setResultStats([...resultStats,{
+        setResultStats([...resultStats, {
             user_id: USER_ID,
             question_id: questions[currenNumber].id,
             answer_id: chosenId,
@@ -117,7 +122,7 @@ export const Game = () => {
     }
 
     const TimesHasGone = () => {
-        setResultStats([...resultStats,{
+        setResultStats([...resultStats, {
             user_id: USER_ID,
             question_id: questions[currenNumber].id,
             answer_id: 0,
@@ -129,10 +134,10 @@ export const Game = () => {
     }
 
     const nextQuestion = () => {
-        console.log(resultStats);
 
         if (isChose || (counter == 0)) {
             if (questions.length == (currenNumber + 1)) {
+                dispatch(setAll(questions.length));
                 navigate("/game/result/");
             }
             setCurrentNumber(currenNumber + 1);
