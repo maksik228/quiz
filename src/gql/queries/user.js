@@ -1,13 +1,10 @@
 import connection from "../db/mysql.js";
 import passwordHash from "password-hash";
 import jwt from "jsonwebtoken";
-
-const secret = 'secret';
+import 'dotenv/config';
 
 export const getUserById = async function(Id) {
     const con = connection;
-    console.log(Id);
-
     const [rows] = await con.execute('SELECT * FROM users WHERE id = ?', [Id]);
     console.log(rows);
     // await con.end();
@@ -27,14 +24,14 @@ export const createUser = async function(user) {
 
 export const checkToken = async function(token) {
     try {
-        const decode = jwt.verify(token,'secret');
+        const decode = jwt.verify(token,process.env.SECRET_TOKEN);
         if (decode.id) {
             return {status: false, id: decode.id, token: token};
         } else {
             return {status: true, id: 0, token: ''};
         }
     } catch (e) {
-        return {status: true, id: 0, token: ''};
+        return {status: false, id: 0, token: ''};
     }
 }
 
@@ -54,5 +51,5 @@ export const isUserExist = async function(user) {
 }
 
 const  createToken = function (user_id) {
-    return jwt.sign({id: user_id}, secret, {expiresIn: "24h"});
+    return jwt.sign({id: user_id}, process.env.SECRET_TOKEN, {expiresIn: "24h"});
 }
