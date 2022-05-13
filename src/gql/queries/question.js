@@ -42,9 +42,6 @@ export const  getQuestionWithAnswersByThemeAndUser = async (theme_id,user_id) =>
             });
         }
     }
-    // console.log(result);
-    // console.log(result[0]);
-    // console.log(result[1]);
-    // console.log(result[2]);
+
     return result;
 }
